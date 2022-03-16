@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bottom_sheet_corner"
+    android:elevation="16dp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="75dp"
+        android:layout_height="6dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/gray"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_border"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="1dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="3dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_search"
+            style="@style/MyDenseOutlined"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="3dp"
+            app:boxBackgroundColor="@color/edit_text_background"
+            app:boxStrokeColor="@color/white"
+            app:endIconDrawable="@drawable/ic_search"
+            app:endIconMode="custom"
+            app:endIconTint="@color/main_text_color"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/where_to"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/main_text_color"
+                android:textColorHint="@color/text_hint_color"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:clipToPadding="false"
+        android:nestedScrollingEnabled="false"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_border" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/nearby_places"
+        android:textColor="@color/main_text_color"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/rv_category" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_nearby_places"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="11dp"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="carnation_pink">#FFAFDD</color>
+    <color name="frostbite">#E64AA4</color>
+
+    <color name="light_blue_main">#D0DAF5</color>
+    <color name="blue_main">#2B58D3</color>
+    <color name="text_blue">#1D3A8C</color>
+
+    <color name="all">#FFF4E3</color>
+    <color name="alice_blue">#E3F0FF</color>
+    <color name="education">#FEE3FF</color>
+    <color name="travel">#E9E3FF</color>
+    <color name="sim">#FAEBFF</color>
+    <color name="light_cyan">#E3FCFF</color>
+    <color name="honeydew">#E3FFEB</color>
+    <color name="gray">#D9D9D9</color>
+    <color name="main_text_color">#13275E</color>
+    <color name="government">#FFF4E3</color>
+    <color name="entertainment">#FFEBEB</color>
+    <color name="distance_text_color">#599EF0</color>
+
+    <color name="capacity_light">#94D67C</color>
+    <color name="capacity_moderator">#FF9732</color>
+    <color name="capacity_closed">#ADADAD</color>
+    <color name="capacity_crowded">#ED625D</color>
+
+    <color name="text_hint_color">#AFAFAF</color>
+    <color name="edit_text_background">#F4F4F4</color>
+    <color name="transparent">#00000000</color>
+    <color name="check_box_text_color">#707070</color>
+</resources>

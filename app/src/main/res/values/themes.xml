@@ -1,0 +1,58 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.Sawa.Pink" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/main_text_color</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/main_text_color</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/white</item>
+
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="android:textColor">@color/main_text_color</item>
+
+        <item name="android:fontFamily">@font/poppins_regular</item>
+
+        <item name="mainColor">@color/frostbite</item>
+        <item name="lightColor">@color/carnation_pink</item>
+        <item name="TextThemeColor">@color/frostbite</item>
+        <item name="splashScreenIcon">@drawable/ic_sawa</item>
+
+    </style>
+
+    <style name="Theme.Sawa.Blue" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/main_text_color</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/main_text_color</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/white</item>
+
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="android:textColor">@color/main_text_color</item>
+
+        <item name="android:fontFamily">@font/poppins_regular</item>
+
+        <item name="mainColor">@color/blue_main</item>
+        <item name="lightColor">@color/light_blue_main</item>
+        <item name="TextThemeColor">@color/text_blue</item>
+        <item name="splashScreenIcon">@drawable/ic_sawa_blue</item>
+
+    </style>
+
+    <attr name="mainColor" format="color" />
+    <attr name="lightColor" format="color" />
+    <attr name="TextThemeColor" format="color" />
+    <attr name="splashScreenIcon" format="reference" />
+
+</resources>

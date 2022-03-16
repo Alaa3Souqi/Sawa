@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Sawa</string>
+    <string name="logo">Logo</string>
+    <string name="menu">Menu</string>
+    <string name="button">button</string>
+    <string name="tap_to_check_in">Tap To Check-In</string>
+    <string name="all">All</string>
+    <string name="retail">Retail</string>
+    <string name="banks">Banks</string>
+    <string name="government">Government</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="telecommunication">Telecommunication</string>
+    <string name="education">Education</string>
+    <string name="insurance">Insurance</string>
+    <string name="travel">Travel</string>
+    <string name="nearby_places">Nearby Places</string>
+    <string name="capacity_light">Light</string>
+    <string name="capacity_moderator">Moderator</string>
+    <string name="capacity_closed">Closed</string>
+    <string name="capacity_crowded">Crowded</string>
+    <string name="where_to">Where to?</string>
+    <string name="back">back</string>
+    <string name="favorites">Favorites</string>
+    <string name="history">History</string>
+    <string name="logout">Logout</string>
+    <string name="language">Language</string>
+    <string name="theme">Theme</string>
+    <string name="english">English</string>
+    <string name="arabic">العربية</string>
+    <string name="blue">Blue</string>
+    <string name="pink">Pink</string>
+    <string name="or_login_with">Or login with</string>
+    <string name="create_account">Create Account</string>
+    <string name="health">Health</string>
+
+    <string name="take_photo">Take Photo</string>
+    <string name="start_capture">Start Capture</string>
+    <string name="stop_capture">Stop Capture</string>
+    <string name="place_the_qr_code_inside_the_frame_check_in">Place the QR code inside the frame check-in</string>
+
+
+</resources>
