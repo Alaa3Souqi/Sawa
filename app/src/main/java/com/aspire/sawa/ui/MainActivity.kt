@@ -12,6 +12,7 @@ import com.aspire.sawa.viewModels.SettingViewModel
 import java.util.*
 import javax.inject.Inject
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appComponent: AppComponent

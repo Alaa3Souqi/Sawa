@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.res.ResourcesCompat.getFont
 import androidx.core.view.GravityCompat.END
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.aspire.sawa.R
 import com.aspire.sawa.adapters.CategoryAdapter
 import com.aspire.sawa.adapters.PlaceAdapter
@@ -62,13 +61,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
             ivMenu.setOnClickListener { drawerLayout.openDrawer(END) }
 
             btnCheckIn.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_QRScannerFragment)
+                //findNavController().navigate(R.id.action_homeFragment_to_QRScannerFragment)
             }
 
         }
 
         return binding.root
-
     }
 
     private fun setupNavigationDrawer() {
