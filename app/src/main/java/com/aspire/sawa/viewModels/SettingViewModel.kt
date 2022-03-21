@@ -5,7 +5,6 @@ import com.aspire.sawa.repositoires.SettingsRepositories
 import com.aspire.sawa.unitls.Constraints.ARABIC
 import com.aspire.sawa.unitls.Constraints.ENGLISH
 import com.aspire.sawa.unitls.Constraints.PINK
-import java.util.*
 import java.util.Locale.getDefault
 import javax.inject.Inject
 
