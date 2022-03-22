@@ -1,32 +1,18 @@
 package com.aspire.sawa.ui.fragments
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.aspire.sawa.R
 import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
 
-class SplashFragment : Fragment(R.layout.fragment_splash), CoroutineScope {
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + Job()
+class SplashFragment : Fragment(R.layout.fragment_splash) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        launch {
+    override fun onStart() {
+        super.onStart()
+        lifecycleScope.launch(Dispatchers.Main) {
             delay(750)
-            withContext(Dispatchers.Main){
-                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
-            }
+            findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
         }
-
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
 }
