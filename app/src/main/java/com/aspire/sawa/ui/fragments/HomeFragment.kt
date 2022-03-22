@@ -60,10 +60,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
 
             ivMenu.setOnClickListener { drawerLayout.openDrawer(END) }
 
-            btnCheckIn.setOnClickListener {
-                //findNavController().navigate(R.id.action_homeFragment_to_QRScannerFragment)
-            }
-
         }
 
         return binding.root

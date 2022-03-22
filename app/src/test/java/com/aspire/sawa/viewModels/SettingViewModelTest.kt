@@ -51,7 +51,7 @@ class SettingViewModelTest {
 
     @Test
     fun `getLanguage Arabic language in sharedPreferences returns arabic`() {
-        every { settingViewModel.getLanguage() } returns ARABIC
+        every { repo.getLanguage() } returns ARABIC
 
         val language = settingViewModel.getLanguage()
 
