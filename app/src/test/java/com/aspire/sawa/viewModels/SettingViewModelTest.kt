@@ -20,7 +20,7 @@ class SettingViewModelTest {
     @Before
     fun setup() {
         repo = mockk {
-            every { getLanguage() } returns null
+            every { getLanguage() } returns ENGLISH
             every { getTheme() } returns BLUE
         }
         settingViewModel = SettingViewModel(repo)

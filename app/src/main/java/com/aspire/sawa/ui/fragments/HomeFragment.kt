@@ -1,8 +1,6 @@
 package com.aspire.sawa.ui.fragments
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,11 +24,6 @@ import com.aspire.sawa.unitls.Constraints.PINK
 import com.aspire.sawa.unitls.Constraints.categoryList
 import com.aspire.sawa.unitls.Constraints.placeList
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
-import com.google.android.material.textfield.TextInputLayout.END_ICON_CLEAR_TEXT
-import com.google.android.material.textfield.TextInputLayout.END_ICON_CUSTOM
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChangeListener {
     private lateinit var binding: FragmentHomeBinding
@@ -53,14 +46,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
         setupOnBackPress()
         setupNavigationDrawer()
 
+        binding.drawerLayout.setScrimColor(getColor(requireContext(), R.color.transparent))
 
-        binding.run {
-
-            drawerLayout.setScrimColor(getColor(requireContext(), R.color.transparent))
-
-            ivMenu.setOnClickListener { drawerLayout.openDrawer(END) }
-
-        }
+        binding.ivMenu.setOnClickListener { binding.drawerLayout.openDrawer(END) }
 
         return binding.root
     }
@@ -123,7 +111,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
             categoryRvSetup()
             placeRvSetup()
 
-            etSearch.addTextChangedListener(textWatcher)
             etSearch.onFocusChangeListener = View.OnFocusChangeListener { _, opened ->
                 if (opened)
                     behavior.state = STATE_EXPANDED
@@ -152,37 +139,36 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
      * So, I used the delay function to solve this issue.
      */
 
-    private val textWatcher = object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {
-            if (s.isNullOrEmpty()) {
-                editTextEndDrawableSearch()
-            } else {
-                editTextEndDrawableClear()
-            }
-        }
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            if (s.isNullOrEmpty()) {
-                editTextEndDrawableSearch()
-            } else {
-                editTextEndDrawableClear()
-            }
-        }
-    }
-
-    private fun editTextEndDrawableSearch() = MainScope().launch {
-        delay(100)
-        bottomSheetBinding.tilSearch.endIconMode = END_ICON_CUSTOM
-        bottomSheetBinding.tilSearch.setEndIconDrawable(R.drawable.ic_search)
-    }
-
-    private fun editTextEndDrawableClear() {
-        bottomSheetBinding.tilSearch.endIconMode = END_ICON_CLEAR_TEXT
-        bottomSheetBinding.tilSearch.setEndIconDrawable(R.drawable.ic_clear)
-    }
+//    private val textWatcher = object : TextWatcher {
+//        override fun afterTextChanged(s: Editable?) {
+//            if (s.isNullOrEmpty()) {
+//                editTextEndDrawableSearch()
+//            } else {
+//                editTextEndDrawableClear()
+//            }
+//        }
+//
+//        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//        }
+//
+//        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            if (s.isNullOrEmpty()) {
+//                editTextEndDrawableSearch()
+//            } else {
+//                editTextEndDrawableClear()
+//            }
+//        }
+//    }
+//
+//    private fun editTextEndDrawableSearch() = lifecycleScope.launch(Dispatchers.Main) {
+//        bottomSheetBinding.tilSearch.setEndIconDrawable(R.drawable.ic_search)
+//        bottomSheetBinding.tilSearch.endIconMode = END_ICON_CUSTOM
+//    }
+//
+//    private fun editTextEndDrawableClear() {
+//        bottomSheetBinding.tilSearch.endIconMode = END_ICON_CLEAR_TEXT
+//        bottomSheetBinding.tilSearch.setEndIconDrawable(R.drawable.ic_clear)
+//    }
 
     override fun onCheckedChanged(radioGroup: RadioGroup, radioButton: Int) {
         drawerBinding.run {
@@ -201,14 +187,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
                     mainActivity.viewModel.updateTheme(BLUE)
                 }
             }
-            mainActivity.restartActivity()
+            recreate()
         }
     }
 
-//    private fun recreate() {
-//        mainActivity.restartActivity()
-//        binding.drawerLayout.closeDrawer(END)
-//        bottomSheetBinding.etSearch.clearFocus()
-//    }
+    private fun recreate() {
+        mainActivity.recreate()
+        binding.drawerLayout.closeDrawer(END)
+        bottomSheetBinding.etSearch.clearFocus()
+    }
 
 }

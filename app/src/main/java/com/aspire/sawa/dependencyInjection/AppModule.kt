@@ -19,11 +19,6 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideEditSharedPreferences(context: Context): SharedPreferences.Editor =
-        context.getSharedPreferences(Constraints.MY_PREFS_NAME, Context.MODE_PRIVATE).edit()
-
-    @Singleton
-    @Provides
     fun provideContext(app: Application): Context = app.applicationContext
 
 

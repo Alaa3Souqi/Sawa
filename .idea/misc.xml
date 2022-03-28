@@ -9,12 +9,14 @@
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable-v24/selector_color_text_check_box.xml" value="0.1205" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/a.xml" value="0.18" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/border_button_create_account.xml" value="0.1205" />
+        <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/border_rounded_background.xml" value="0.1385" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/bottom_sheet_corner.xml" value="0.1235" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/home_category_corner.xml" value="0.1235" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/ic_apple.xml" value="0.1205" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/ic_arrow_left.xml" value="0.1245" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/ic_clear.xml" value="0.1235" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/ic_color_lens.xml" value="0.1205" />
+        <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/ic_history.xml" value="0.1385" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/ic_home_button.xml" value="0.1335" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/ic_language.xml" value="0.1205" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/ic_menu.xml" value="0.1335" />
@@ -25,6 +27,7 @@
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/main_button_selector.xml" value="0.1335" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/sawa_background_color.xml" value="0.1165" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/selector_color_menu_check_box.xml" value="0.1205" />
+        <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/selector_end_icon_edit_text.xml" value="0.1385" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/selector_home_button.xml" value="0.1" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/selector_menu_check_box_font_family.xml" value="0.1" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/drawable/top_corner_navigation_drawer.xml" value="0.1245" />
@@ -35,10 +38,11 @@
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/layout/fragment_home_navigation_drawer.xml" value="0.37592592592592594" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/layout/fragment_qr_scanner.xml" value="0.14" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/layout/fragment_splash.xml" value="0.10208333333333333" />
-        <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/layout/home_bottom_sheet.xml" value="0.19444444444444445" />
+        <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/layout/home_bottom_sheet.xml" value="0.5" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/layout/home_navigation_drawer.xml" value="0.21" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/layout/item_home_category.xml" value="0.22" />
-        <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/layout/item_home_near_places.xml" value="0.15730337078651685" />
+        <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/layout/item_home_near_places.xml" value="0.43258426966292135" />
+        <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/layout/layout_registration_drawer.xml" value="0.1675929884566054" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/layout/layout_registration_navigation_drawer.xml" value="0.1675929884566054" />
         <entry key="..\:/Users/asouqi/AndroidStudioProjects/Sawa/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1205" />
       </map>

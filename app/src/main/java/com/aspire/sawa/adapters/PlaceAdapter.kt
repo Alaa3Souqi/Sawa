@@ -1,10 +1,9 @@
 package com.aspire.sawa.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
+import androidx.appcompat.content.res.AppCompatResources.getColorStateList
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -52,30 +51,32 @@ class PlaceAdapter : RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
             distance.text = item.distance
             capacity.text = item.capacity
             openedState.text = item.opened
-            when (item.capacityState) {
 
-                MODERATE -> {
-                    capacityStateText.setTextByResources(R.string.capacity_moderator)
-                    capacityState.setColor(R.color.capacity_moderator)
-                }
+            capacityState.run {
+                when (item.capacityState) {
 
-                CLOSED -> {
-                    capacityStateText.setTextByResources(R.string.capacity_closed)
-                    capacityState.setColor(R.color.capacity_closed)
-                    openedState.setTextColorByResources(R.color.capacity_crowded)
-                }
+                    MODERATE -> {
+                        setCapacityStateTextByResources(R.string.capacity_moderator)
+                        setCapacityStateTint(R.color.capacity_moderator)
+                    }
 
-                LIGHT -> {
-                    capacityStateText.setTextByResources(R.string.capacity_light)
-                    capacityState.setColor(R.color.capacity_light)
-                }
+                    CLOSED -> {
+                        setCapacityStateTextByResources(R.string.capacity_closed)
+                        setCapacityStateTint(R.color.capacity_closed)
+                        setOpenedStateTextColorByResources(R.color.capacity_crowded)
+                    }
 
-                CROWDED -> {
-                    capacityStateText.setTextByResources(R.string.capacity_crowded)
-                    capacityState.setColor(R.color.capacity_crowded)
+                    LIGHT -> {
+                        setCapacityStateTextByResources(R.string.capacity_light)
+                        setCapacityStateTint(R.color.capacity_light)
+                    }
+
+                    CROWDED -> {
+                        setCapacityStateTextByResources(R.string.capacity_crowded)
+                        setCapacityStateTint(R.color.capacity_crowded)
+                    }
                 }
             }
-
         }
     }
 
@@ -88,26 +89,21 @@ class PlaceAdapter : RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
         val name = binding.tvPlaceName
         val image = binding.ivPlaceImage
         val distance = binding.tvPlaceDistance
-        val capacityState = binding.cvCapacityState
-        val capacityStateText = binding.tvCapacityState
+        val capacityState = binding.tvCapacityState
         val capacity = binding.tvCapacity
         val openedState = binding.tvOpenedState
+        val context: Context = itemView.context
 
-        internal fun TextView.setTextByResources(resId: Int) {
-            return this.setText(itemView.context.getString(resId))
+        internal fun setCapacityStateTextByResources(resId: Int) {
+            capacityState.text = context.getString(resId)
         }
 
-        internal fun TextView.setTextColorByResources(resId: Int) {
-            this.setTextColor(itemView.context.getColor(resId))
+        internal fun setOpenedStateTextColorByResources(resId: Int) {
+            openedState.setTextColor(context.getColor(resId))
         }
 
-        internal fun CardView.setColor(resId: Int) {
-            this.setCardBackgroundColor(
-                ContextCompat.getColor(
-                    itemView.context,
-                    resId
-                )
-            )
+        internal fun setCapacityStateTint(resId: Int) {
+            capacityState.backgroundTintList = getColorStateList(context, resId)
         }
     }
 }
