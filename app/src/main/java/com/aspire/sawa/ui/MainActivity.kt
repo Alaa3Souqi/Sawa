@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setLocale(viewModel.getLanguage())
-        recreate()
     }
 
     fun restartActivity() {
