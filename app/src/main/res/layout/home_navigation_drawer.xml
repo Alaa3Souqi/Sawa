@@ -9,7 +9,7 @@
         android:id="@+id/group3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_goneMarginTop="@dimen/navigation_drawer_first_item_margin"
         app:constraint_referenced_ids="cl_log_out,cl_favorites,cl_history,view" />
 
@@ -308,8 +308,8 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
             android:layout_marginStart="32dp"
             android:contentDescription="@string/favorites"
             android:src="@drawable/ic_logout"

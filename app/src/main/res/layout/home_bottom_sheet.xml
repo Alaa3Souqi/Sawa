@@ -50,7 +50,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_search"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:layout_gravity="center_vertical"
@@ -74,7 +74,6 @@
                 android:drawableEnd="@drawable/ic_search"
                 android:hint="@string/where_to"
                 android:imeOptions="actionDone"
-                android:importantForAutofill="no"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@color/main_text_color"
@@ -83,7 +82,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.cardview.widget.CardView>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_category"

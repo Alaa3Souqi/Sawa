@@ -42,5 +42,4 @@ class SettingsRepositories @Inject constructor(
 
     private fun getLocalLanguage(): String =
         Locale.getDefault().language
-
 }
