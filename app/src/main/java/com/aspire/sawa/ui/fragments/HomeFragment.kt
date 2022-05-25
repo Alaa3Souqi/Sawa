@@ -1,35 +1,62 @@
 package com.aspire.sawa.ui.fragments
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat.getColor
+import androidx.core.content.ContextCompat.getColorStateList
 import androidx.core.content.res.ResourcesCompat.getFont
 import androidx.core.view.GravityCompat.END
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.aspire.sawa.R
+import com.aspire.sawa.SawaApplication
 import com.aspire.sawa.adapters.CategoryAdapter
 import com.aspire.sawa.adapters.PlaceAdapter
-import com.aspire.sawa.databinding.FragmentHomeBinding
-import com.aspire.sawa.databinding.HomeBottomSheetBinding
-import com.aspire.sawa.databinding.HomeNavigationDrawerBinding
+import com.aspire.sawa.databinding.*
+import com.aspire.sawa.dependencyInjection.AppComponent
+import com.aspire.sawa.models.Place
 import com.aspire.sawa.ui.MainActivity
+import com.aspire.sawa.unitls.Constraints
 import com.aspire.sawa.unitls.Constraints.ARABIC
 import com.aspire.sawa.unitls.Constraints.BLUE
+import com.aspire.sawa.unitls.Constraints.CHECK_IN_ID
 import com.aspire.sawa.unitls.Constraints.ENGLISH
 import com.aspire.sawa.unitls.Constraints.PINK
 import com.aspire.sawa.unitls.Constraints.categoryList
 import com.aspire.sawa.unitls.Constraints.placeList
+import com.aspire.sawa.viewModels.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
+import javax.inject.Inject
+
 
 class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChangeListener {
+
     private lateinit var binding: FragmentHomeBinding
     private lateinit var bottomSheetBinding: HomeBottomSheetBinding
     private lateinit var drawerBinding: HomeNavigationDrawerBinding
+    private lateinit var checkedInBinding: LayoutCheckedInBinding
     private lateinit var mainActivity: MainActivity
+    private lateinit var appComponent: AppComponent
+    private lateinit var navController: NavController
+
+    @Inject
+    lateinit var viewModel: HomeViewModel
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mainActivity = activity as MainActivity
+        appComponent = (mainActivity.application as SawaApplication).appComponent
+        appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,17 +67,175 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
         binding = FragmentHomeBinding.inflate(layoutInflater)
         bottomSheetBinding = binding.include
         drawerBinding = binding.navDrawer
-        mainActivity = activity as MainActivity
+        checkedInBinding = binding.includeCheckedIn
+        navController = findNavController()
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setupBottomSheet()
         setupOnBackPress()
         setupNavigationDrawer()
+        viewModel.getCheckedInPlace()
+
+        viewModel.checkedInPlace.observe(viewLifecycleOwner) { checkInPlace ->
+            val place = placeList.first { it.id == checkInPlace.id }
+            setupCheckedIn(place, checkInPlace.checkInTime)
+        }
+
+        val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+        savedStateHandle?.getLiveData<String>(CHECK_IN_ID)?.observe(viewLifecycleOwner) { id ->
+            if (id != null) {
+                viewModel.checkIn(id)
+                viewModel.getCheckedInPlace()
+                savedStateHandle.getLiveData<String>(CHECK_IN_ID).value = null
+            }
+        }
+
+        binding.btnCheckIn.setOnClickListener {
+            navController.navigate(R.id.action_homeFragment_to_qrCodeFragment)
+        }
 
         binding.drawerLayout.setScrimColor(getColor(requireContext(), R.color.transparent))
 
         binding.ivMenu.setOnClickListener { binding.drawerLayout.openDrawer(END) }
 
-        return binding.root
+    }
+
+    private fun setupCheckedIn(place: Place, checkInTime: String) {
+        binding.btnGroup.isVisible = false
+        binding.includeCheckedIn.root.isVisible = true
+
+        checkedInBinding.run {
+
+            tvCheckedInName.text = place.name
+            tvBranchName.text = place.branch
+            ivCheckedInLogo.setImageResource(place.image)
+            tvCheckInTime.text = getString(R.string.time, checkInTime)
+
+            fillCheckInCapacityState(place, this)
+
+            viewModel.refreshTimer()
+
+            var duration = ""
+            viewModel.timer.observe(viewLifecycleOwner) {
+                tvDuration.text = getString(R.string.duration, it)
+                duration = it
+            }
+
+            cvCheckOut.setOnClickListener {
+                createCheckOutDialog(place, duration)
+
+            }
+        }
+    }
+
+    private fun createCheckOutDialog(place: Place, duration: String) {
+
+        val builder = AlertDialog.Builder(requireContext(), R.style.CustomAlertDialog)
+            .create()
+
+        val dialog = LayoutDialogCheckOutBinding.inflate(layoutInflater)
+
+        dialog.run {
+            ivPlaceLogo.setImageResource(place.image)
+            tvPlaceNameDialog.text = place.name
+            tvBranch.text = getString(R.string.thank_for_visiting, place.branch)
+            tvSpentDuration.text = getString(R.string.spent_duration, duration)
+
+            tvCancel.setOnClickListener {
+                builder.dismiss()
+            }
+
+            clCheckOut.setOnClickListener {
+                createRateDialog(place)
+                viewModel.checkOut()
+
+                binding.btnGroup.isVisible = true
+                binding.includeCheckedIn.root.isVisible = false
+                builder.dismiss()
+            }
+
+        }
+
+        builder.run {
+
+            setView(dialog.root)
+            setCanceledOnTouchOutside(false)
+            show()
+
+        }
+    }
+
+    private fun fillCheckInCapacityState(place: Place, checkInBinding: LayoutCheckedInBinding) {
+        checkInBinding.run {
+            when (place.capacityState) {
+
+                Constraints.MODERATE -> {
+                    tvCapacityState.text = getString(R.string.capacity_moderator)
+                    tvCapacityState.backgroundTintList =
+                        getColorStateList(requireContext(), R.color.capacity_moderator)
+                }
+
+                Constraints.CLOSED -> {
+                    tvCapacityState.text = getString(R.string.capacity_closed)
+                    tvCapacityState.backgroundTintList =
+                        getColorStateList(requireContext(), R.color.capacity_closed)
+                }
+
+                Constraints.LIGHT -> {
+                    tvCapacityState.text = getString(R.string.capacity_light)
+                    tvCapacityState.backgroundTintList =
+                        getColorStateList(requireContext(), R.color.capacity_light)
+                }
+
+                Constraints.CROWDED -> {
+                    tvCapacityState.text = getString(R.string.capacity_crowded)
+                    tvCapacityState.backgroundTintList =
+                        getColorStateList(requireContext(), R.color.capacity_crowded)
+                }
+            }
+        }
+    }
+
+    private fun createRateDialog(place: Place) {
+
+        val builder = AlertDialog.Builder(requireContext(), R.style.CustomAlertDialog)
+            .create()
+        val dialog = LayoutDialogRateBinding.inflate(layoutInflater)
+
+        dialog.run {
+
+            ivPlaceLogo.setImageResource(place.image)
+            tvPlaceNameDialog.text = place.name
+
+            tvLater.setOnClickListener {
+                builder.dismiss()
+            }
+
+            rbExperience.setOnRatingBarChangeListener { _, _, _ ->
+                btnSave.isEnabled = true
+            }
+
+            btnSave.setOnClickListener {
+                builder.dismiss()
+                Toast.makeText(
+                    requireContext(),
+                    "Rate : ${rbExperience.rating.toInt()}",
+                    Toast.LENGTH_LONG
+                )
+                    .show()
+            }
+        }
+
+        builder.run {
+            setView(dialog.root)
+            setCanceledOnTouchOutside(false)
+            show()
+        }
     }
 
     private fun setupNavigationDrawer() {
@@ -132,44 +317,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
         bottomSheetBinding.rvNearbyPlaces.adapter = placeAdapter
     }
 
-    /**
-     * TextWatcher will change InputTextLayout's End Drawable to clear text when start typing.
-     * If the text is empty, the search icon will appear.
-     * Issue: When clicking on the clear text icon, a shadow effect on the icon will still appear even after clearing the text.
-     * So, I used the delay function to solve this issue.
-     */
-
-//    private val textWatcher = object : TextWatcher {
-//        override fun afterTextChanged(s: Editable?) {
-//            if (s.isNullOrEmpty()) {
-//                editTextEndDrawableSearch()
-//            } else {
-//                editTextEndDrawableClear()
-//            }
-//        }
-//
-//        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//        }
-//
-//        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//            if (s.isNullOrEmpty()) {
-//                editTextEndDrawableSearch()
-//            } else {
-//                editTextEndDrawableClear()
-//            }
-//        }
-//    }
-//
-//    private fun editTextEndDrawableSearch() = lifecycleScope.launch(Dispatchers.Main) {
-//        bottomSheetBinding.tilSearch.setEndIconDrawable(R.drawable.ic_search)
-//        bottomSheetBinding.tilSearch.endIconMode = END_ICON_CUSTOM
-//    }
-//
-//    private fun editTextEndDrawableClear() {
-//        bottomSheetBinding.tilSearch.endIconMode = END_ICON_CLEAR_TEXT
-//        bottomSheetBinding.tilSearch.setEndIconDrawable(R.drawable.ic_clear)
-//    }
-
     override fun onCheckedChanged(radioGroup: RadioGroup, radioButton: Int) {
         drawerBinding.run {
             when (radioButton) {
@@ -196,5 +343,4 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
         binding.drawerLayout.closeDrawer(END)
         bottomSheetBinding.etSearch.clearFocus()
     }
-
 }

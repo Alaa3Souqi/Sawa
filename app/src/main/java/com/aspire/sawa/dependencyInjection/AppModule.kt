@@ -6,6 +6,8 @@ import android.content.SharedPreferences
 import com.aspire.sawa.unitls.Constraints
 import dagger.Module
 import dagger.Provides
+import java.util.*
+import javax.inject.Named
 import javax.inject.Singleton
 
 
@@ -21,5 +23,10 @@ class AppModule {
     @Provides
     fun provideContext(app: Application): Context = app.applicationContext
 
+    @Singleton
+    @Provides
+    @Named("language")
+    fun provideLocaleLanguage(): String =
+        Locale.getDefault().language
 
 }

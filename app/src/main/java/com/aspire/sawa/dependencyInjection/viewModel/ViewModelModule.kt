@@ -1,6 +1,7 @@
 package com.aspire.sawa.dependencyInjection.viewModel
 
 import androidx.lifecycle.ViewModel
+import com.aspire.sawa.viewModels.HomeViewModel
 import com.aspire.sawa.viewModels.SettingViewModel
 import dagger.Binds
 import dagger.Module
@@ -12,7 +13,11 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(SettingViewModel::class)
-    abstract fun bindSplashViewModel(viewModel: SettingViewModel): ViewModel
+    abstract fun settingViewModel(viewModel: SettingViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingViewModel::class)
+    abstract fun homeViewModel(viewModel: HomeViewModel): ViewModel
 
 }

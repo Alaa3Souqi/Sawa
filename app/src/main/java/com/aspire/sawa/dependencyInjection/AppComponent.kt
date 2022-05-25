@@ -2,6 +2,7 @@ package com.aspire.sawa.dependencyInjection
 
 import android.app.Application
 import com.aspire.sawa.ui.MainActivity
+import com.aspire.sawa.ui.fragments.HomeFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -16,5 +17,6 @@ interface AppComponent {
     }
 
     fun inject(activity: MainActivity)
+    fun inject(activity: HomeFragment)
 
 }

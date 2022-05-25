@@ -43,6 +43,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/iv_logo" />
 
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/btn_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="btn_check_in,textView" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_check_in"
                 android:layout_width="@dimen/home_button_size"
@@ -71,6 +77,16 @@
                 app:layout_constraintEnd_toEndOf="@+id/btn_check_in"
                 app:layout_constraintStart_toStartOf="@+id/btn_check_in"
                 app:layout_constraintTop_toBottomOf="@+id/btn_check_in" />
+
+            <include
+                android:id="@+id/include_checked_in"
+                layout="@layout/layout_checked_in"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

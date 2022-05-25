@@ -1,13 +1,12 @@
 package com.aspire.sawa.repositoires
 
 import android.content.SharedPreferences
-import assertk.assertThat
-import assertk.assertions.isEqualTo
 import com.aspire.sawa.unitls.Constraints.ARABIC
 import com.aspire.sawa.unitls.Constraints.ENGLISH
 import com.aspire.sawa.unitls.Constraints.LANGUAGE
 import com.aspire.sawa.unitls.Constraints.PINK
 import com.aspire.sawa.unitls.Constraints.THEME
+import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Before
@@ -24,7 +23,7 @@ class SettingsRepositoriesTest {
             every { getString(LANGUAGE, null) } returns ENGLISH
             every { getString(THEME, PINK) } returns PINK
         }
-        settingsRepositories = SettingsRepositories(pref)
+        settingsRepositories = SettingsRepositories(pref, "France")
     }
 
     @Test
@@ -36,10 +35,12 @@ class SettingsRepositoriesTest {
 
     @Test
     fun `getLanguage with EMPTY arg in pref and FRANCE in local returns ENGLISH`() {
+
         pref = mockk(relaxed = true) {
-            every { getString(LANGUAGE, null) } returns "FRANCE"
+            every { getString(LANGUAGE, null) } returns null
         }
-        settingsRepositories = SettingsRepositories(pref)
+
+        settingsRepositories = SettingsRepositories(pref, "FRANCE")
 
         val language = settingsRepositories.getLanguage()
 
@@ -52,7 +53,7 @@ class SettingsRepositoriesTest {
             every { getString(LANGUAGE, null) } returns ARABIC
         }
 
-        settingsRepositories = SettingsRepositories(pref)
+        settingsRepositories = SettingsRepositories(pref, "English")
 
         val language = settingsRepositories.getLanguage()
 

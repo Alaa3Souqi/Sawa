@@ -20,6 +20,10 @@ object Constraints {
     const val PINK = "pink"
     const val BLUE = "blue"
 
+    const val CHECK_IN_ID = "checkInID"
+    const val CHECK_IN_Time = "checkInTime"
+
+
     val categoryList = listOf(
         Category(R.string.all, R.drawable.ic_grid, R.color.all),
         Category(R.string.retail, R.drawable.ic_shopping_bag, R.color.alice_blue),
@@ -35,39 +39,85 @@ object Constraints {
 
     val placeList = listOf(
         Place(
+            "0",
             "Star Bucks",
             "200 m away",
             R.drawable.star_bucks,
             "Open now: 8am–9pm",
             "Capacity: 142/250",
-            MODERATE
+            MODERATE,
+            "Starbucks Abdoun"
         ),
         Place(
+            "1",
             "Carrefour Gardens",
             "1.2 km away",
             R.drawable.carrefour,
             "Closed: Friday",
             "Capacity:",
-            CLOSED
+            CLOSED,
+            "Gardens"
         ),
         Place(
+            "2",
             "Carrefour Jabal Al Hussein",
             "1.4 km away",
             R.drawable.carrefour,
             "Open now: 8am–9pm",
             "Capacity: 11/250:",
-            LIGHT
+            LIGHT,
+            "Jabal Al Hussein"
         ),
 
         Place(
+            "3",
             "Carrefour Galleria Mall",
             "5 km away",
             R.drawable.carrefour,
             "Open now: 8am–9pm",
             "Capacity: 243/250",
-            CROWDED
+            CROWDED,
+            "Galleria Mall"
         )
     )
+
+    /**
+     * TextWatcher will change InputTextLayout's End Drawable to clear text when start typing.
+     * If the text is empty, the search icon will appear.
+     * Issue: When clicking on the clear text icon, a shadow effect on the icon will still appear even after clearing the text.
+     * So, I used the delay function to solve this issue.
+     */
+
+//    private val textWatcher = object : TextWatcher {
+//        override fun afterTextChanged(s: Editable?) {
+//            if (s.isNullOrEmpty()) {
+//                editTextEndDrawableSearch()
+//            } else {
+//                editTextEndDrawableClear()
+//            }
+//        }
+//
+//        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//        }
+//
+//        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            if (s.isNullOrEmpty()) {
+//                editTextEndDrawableSearch()
+//            } else {
+//                editTextEndDrawableClear()
+//            }
+//        }
+//    }
+//
+//    private fun editTextEndDrawableSearch() = lifecycleScope.launch(Dispatchers.Main) {
+//        bottomSheetBinding.tilSearch.setEndIconDrawable(R.drawable.ic_search)
+//        bottomSheetBinding.tilSearch.endIconMode = END_ICON_CUSTOM
+//    }
+//
+//    private fun editTextEndDrawableClear() {
+//        bottomSheetBinding.tilSearch.endIconMode = END_ICON_CLEAR_TEXT
+//        bottomSheetBinding.tilSearch.setEndIconDrawable(R.drawable.ic_clear)
+//    }
 
 
 //        behavior.addBottomSheetCallback(object : BottomSheetCallback() {

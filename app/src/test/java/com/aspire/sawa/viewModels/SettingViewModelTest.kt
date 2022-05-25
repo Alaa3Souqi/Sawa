@@ -1,12 +1,11 @@
 package com.aspire.sawa.viewModels
 
-import assertk.assertThat
-import assertk.assertions.isEqualTo
 import com.aspire.sawa.repositoires.SettingsRepositories
 import com.aspire.sawa.unitls.Constraints.ARABIC
 import com.aspire.sawa.unitls.Constraints.BLUE
 import com.aspire.sawa.unitls.Constraints.ENGLISH
 import com.aspire.sawa.unitls.Constraints.PINK
+import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Before

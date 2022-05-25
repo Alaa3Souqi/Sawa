@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <style name="Theme.Sawa.Pink" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >@android:color/white</item>
+        <item name="android:statusBarColor">@android:color/white</item>
 
         <item name="android:windowLightStatusBar">true</item>
 
@@ -35,7 +35,7 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >@android:color/white</item>
+        <item name="android:statusBarColor">@android:color/white</item>
 
         <item name="android:windowLightStatusBar">true</item>
 
@@ -48,6 +48,10 @@
         <item name="TextThemeColor">@color/text_blue</item>
         <item name="splashScreenIcon">@drawable/ic_sawa_blue</item>
 
+    </style>
+
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/rounded_bg_dialog</item>
     </style>
 
     <attr name="mainColor" format="color" />

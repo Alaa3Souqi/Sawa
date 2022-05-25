@@ -32,11 +32,25 @@
     <string name="or_login_with">Or login with</string>
     <string name="create_account">Create Account</string>
     <string name="health">Health</string>
+    <string name="you_have_checked_in">You have checked-in</string>
+    <string name="branch">Branch:</string>
 
     <string name="take_photo">Take Photo</string>
     <string name="start_capture">Start Capture</string>
     <string name="stop_capture">Stop Capture</string>
     <string name="place_the_qr_code_inside_the_frame_check_in">Place the QR code inside the frame check-in</string>
+    <string name="Capacity">Capacity:</string>
+    <string name="duration">Duration: %1$s</string>
+    <string name="time">Check-in time: %1$s</string>
+    <string name="offers">Offers</string>
+    <string name="another_place">Check-in another place</string>
+    <string name="Check_out">Check-out</string>
+    <string name="thank_for_visiting">Thank you for visiting %1$s branch</string>
+    <string name="rate_experience">Rate your experience</string>
+    <string name="spent_duration">You have spent %1$s</string>
+    <string name="cancel">Cancel</string>
+    <string name="later">Maybe later</string>
+    <string name="save">Save</string>
 
 
 </resources>

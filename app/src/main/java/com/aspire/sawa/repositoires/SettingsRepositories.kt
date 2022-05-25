@@ -6,12 +6,13 @@ import com.aspire.sawa.unitls.Constraints.ENGLISH
 import com.aspire.sawa.unitls.Constraints.LANGUAGE
 import com.aspire.sawa.unitls.Constraints.PINK
 import com.aspire.sawa.unitls.Constraints.THEME
-import java.util.*
 import javax.inject.Inject
+import javax.inject.Named
 
 
 class SettingsRepositories @Inject constructor(
     private val prefs: SharedPreferences,
+    @Named("language") private val localLanguage: String
 ) {
 
     fun getLanguage(): String {
@@ -22,7 +23,7 @@ class SettingsRepositories @Inject constructor(
             return language
         }
 
-        val deviceLanguage = getLocalLanguage()
+        val deviceLanguage = localLanguage
         return if (deviceLanguage != ARABIC && deviceLanguage != ENGLISH)
             ENGLISH
         else
@@ -39,7 +40,4 @@ class SettingsRepositories @Inject constructor(
     fun updateTheme(theme: String) {
         prefs.edit().putString(THEME, theme).apply()
     }
-
-    private fun getLocalLanguage(): String =
-        Locale.getDefault().language
 }

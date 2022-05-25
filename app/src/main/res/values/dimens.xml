@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="bottom_sheet_corner_radius">24dp</dimen>
-    <dimen name="bottom_sheet_peek">330dp</dimen>
+    <dimen name="bottom_sheet_peek">257dp</dimen>
     <dimen name="home_button_size">275dp</dimen>
     <dimen name="navigation_drawer_items_height">64dp</dimen>
     <dimen name="navigation_drawer_items_separated_line">1dp</dimen>
