@@ -24,6 +24,7 @@ class SettingsRepositories @Inject constructor(
         }
 
         val deviceLanguage = localLanguage
+        //TODO: this deviceLanguage val is redundant , we can use localLanguage directly
         return if (deviceLanguage != ARABIC && deviceLanguage != ENGLISH)
             ENGLISH
         else

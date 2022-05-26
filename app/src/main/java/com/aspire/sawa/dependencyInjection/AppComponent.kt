@@ -17,6 +17,6 @@ interface AppComponent {
     }
 
     fun inject(activity: MainActivity)
-    fun inject(activity: HomeFragment)
+    fun inject(activity: HomeFragment) //TODO: take care of copy pasting the code :) , the param name should be modified to fragment
 
 }

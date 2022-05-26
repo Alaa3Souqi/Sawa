@@ -40,6 +40,10 @@ import javax.inject.Inject
 
 class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChangeListener {
 
+    //suggestion
+    private var _fragmentHomeBinding: FragmentHomeBinding? = null
+    private val fragmentHomeBinding get() = _fragmentHomeBinding!!
+    //end of suggestion block
     private lateinit var binding: FragmentHomeBinding
     private lateinit var bottomSheetBinding: HomeBottomSheetBinding
     private lateinit var drawerBinding: HomeNavigationDrawerBinding
@@ -71,6 +75,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
         navController = findNavController()
 
         return binding.root
+        //TODO: please nullify binding in onDestroy() so as to prevent accidental access of views after the fragment's view's been destroyed thus leading to memory leaks
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

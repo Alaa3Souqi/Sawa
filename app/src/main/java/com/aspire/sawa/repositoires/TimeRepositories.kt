@@ -24,6 +24,7 @@ class TimeRepositories @Inject constructor() {
         val format = SimpleDateFormat("HH:mm:ss", Locale.ENGLISH)
         val currentTime = format.parse(time1).time
         val checkInTime = format.parse(time2).time
+        //TODO: need to handle the possible ParseException with try /catch block or kotlin.runCatching
 
         return (currentTime - checkInTime) / 1000
     }

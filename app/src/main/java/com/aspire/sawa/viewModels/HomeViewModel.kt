@@ -27,6 +27,7 @@ class HomeViewModel @Inject constructor(
     private var isComplete = false
 
     fun getCheckedInPlace() {
+        //TODO: remove val id and merge two statements together with nullable check
         val id = checkInRepo.getId()
 
         if (id != null) {

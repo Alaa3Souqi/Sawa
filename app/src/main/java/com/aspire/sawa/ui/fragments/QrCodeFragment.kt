@@ -60,6 +60,7 @@ class QrCodeFragment : Fragment(R.layout.fragment_qr_code) {
 
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        //TODO: please use ActivityResultContract
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
