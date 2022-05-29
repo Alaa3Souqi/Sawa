@@ -51,6 +51,7 @@
     <string name="cancel">Cancel</string>
     <string name="later">Maybe later</string>
     <string name="save">Save</string>
+    <string name="access_camera">Application can\'t access the camera</string>
 
 
 </resources>

@@ -1,14 +1,12 @@
 package com.aspire.sawa.ui.fragments
 
 import android.Manifest
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.aspire.sawa.R
@@ -19,19 +17,21 @@ import com.budiyev.android.codescanner.DecodeCallback
 
 class QrCodeFragment : Fragment(R.layout.fragment_qr_code) {
 
-    lateinit var binding: FragmentQrCodeBinding
+    private var _binding: FragmentQrCodeBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var codeScanner: CodeScanner
 
-    companion object {
-        private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS =
-            mutableListOf(
-                Manifest.permission.CAMERA,
-            ).apply {
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                    add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                }
-            }.toTypedArray()
+    private val requestCameraPermission = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+
+        if (isGranted) {
+            codeScanner.startPreview()
+        } else {
+            Toast.makeText(context, getString(R.string.access_camera), Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     override fun onCreateView(
@@ -39,38 +39,14 @@ class QrCodeFragment : Fragment(R.layout.fragment_qr_code) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentQrCodeBinding.inflate(layoutInflater)
+        _binding = FragmentQrCodeBinding.inflate(layoutInflater)
         return binding.root
-    }
-
-
-    @Deprecated("Deprecated in Java")
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults:
-        IntArray
-    ) {
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
-                codeScanner.startPreview()
-            } else {
-                findNavController().popBackStack()
-            }
-        } else {
-            findNavController().popBackStack()
-
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        //TODO: please use ActivityResultContract
-    }
-
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(
-            requireActivity().baseContext, it
-        ) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requestCameraPermission.launch(Manifest.permission.CAMERA)
 
         codeScanner = CodeScanner(requireActivity(), binding.scannerView)
         codeScanner.decodeCallback = DecodeCallback {
@@ -81,17 +57,15 @@ class QrCodeFragment : Fragment(R.layout.fragment_qr_code) {
             }
         }
 
-        if (allPermissionsGranted()) {
-            codeScanner.startPreview()
-        } else {
-            ActivityCompat.requestPermissions(
-                requireActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
-            )
-        }
-
         binding.ivBackQr.setOnClickListener {
             findNavController().popBackStack()
         }
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
 
     }
 

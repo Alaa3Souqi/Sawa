@@ -79,7 +79,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/btn_check_in" />
 
             <include
-                android:id="@+id/include_checked_in"
+                android:id="@+id/check_in_layout"
                 layout="@layout/layout_checked_in"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
-            android:id="@+id/include"
+            android:id="@+id/bottomSheet"
             layout="@layout/home_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -17,7 +17,7 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SettingViewModel::class)//TODO this need to be modified to HomeViewModel::class ?
+    @ViewModelKey(HomeViewModel::class)
     abstract fun homeViewModel(viewModel: HomeViewModel): ViewModel
 
 }

@@ -1,12 +1,12 @@
 package com.aspire.sawa.viewModels
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aspire.sawa.models.CheckedInPlace
 import com.aspire.sawa.repositoires.CheckInRepositories
 import com.aspire.sawa.repositoires.TimeRepositories
+import com.aspire.sawa.unitls.SingleLiveEvent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,27 +16,19 @@ class HomeViewModel @Inject constructor(
     private val checkInRepo: CheckInRepositories
 ) : ViewModel() {
 
-    private val _timer = MutableLiveData<String>()
+    private val _timer = SingleLiveEvent<String>()
     val timer: LiveData<String>
         get() = _timer
 
-    private val _checkedInPlace = MutableLiveData<CheckedInPlace>()
+    private val _checkedInPlace = SingleLiveEvent<CheckedInPlace>()
     val checkedInPlace: LiveData<CheckedInPlace>
         get() = _checkedInPlace
 
     private var isComplete = false
 
     fun getCheckedInPlace() {
-        //TODO: remove val id and merge two statements together with nullable check
-        val id = checkInRepo.getId()
-
-        if (id != null) {
-            _checkedInPlace.postValue(
-                CheckedInPlace(
-                    id,
-                    timeRepo.getCurrentTime()
-                )
-            )
+        checkInRepo.getId()?.let { id ->
+            _checkedInPlace.postValue(CheckedInPlace(id, timeRepo.getCurrentTime()))
         }
     }
 

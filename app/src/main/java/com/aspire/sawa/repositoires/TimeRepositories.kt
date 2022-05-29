@@ -22,11 +22,13 @@ class TimeRepositories @Inject constructor() {
 
     fun differenceBetweenTwoTimes(time1: String, time2: String): Long {
         val format = SimpleDateFormat("HH:mm:ss", Locale.ENGLISH)
-        val currentTime = format.parse(time1).time
-        val checkInTime = format.parse(time2).time
-        //TODO: need to handle the possible ParseException with try /catch block or kotlin.runCatching
 
-        return (currentTime - checkInTime) / 1000
+        format.parse(time1)?.time?.let { currentTime ->
+            format.parse(time2)?.time?.let { checkInTime ->
+                return (currentTime - checkInTime) / 1000
+            }
+        }
+        return -1
     }
 
 }

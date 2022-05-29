@@ -33,7 +33,6 @@ class CategoryAdapter(private val items: List<Category>) :
                     item.color
                 )
             )
-
         }
     }
 

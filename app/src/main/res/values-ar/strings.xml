@@ -51,4 +51,5 @@
     <string name="cancel">إلغاء</string>
     <string name="later">في وقت لاحق</string>
     <string name="save">حفظ</string>
+    <string name="access_camera">Application can\'t access the camera</string>
 </resources>

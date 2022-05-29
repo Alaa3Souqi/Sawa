@@ -23,22 +23,20 @@ class SettingsRepositories @Inject constructor(
             return language
         }
 
-        val deviceLanguage = localLanguage
-        //TODO: this deviceLanguage val is redundant , we can use localLanguage directly
-        return if (deviceLanguage != ARABIC && deviceLanguage != ENGLISH)
+        return if (localLanguage != ARABIC && localLanguage != ENGLISH)
             ENGLISH
         else
-            deviceLanguage
+            localLanguage
     }
 
-    fun updateLanguage(language: String) {
-        prefs.edit().putString(LANGUAGE, language).apply()
-    }
+    fun updateLanguage(language: String) =
+        prefs.edit().putString(LANGUAGE, language).commit()
+
 
     fun getTheme(): String? =
         prefs.getString(THEME, PINK)
 
-    fun updateTheme(theme: String) {
-        prefs.edit().putString(THEME, theme).apply()
-    }
+    fun updateTheme(theme: String) =
+        prefs.edit().putString(THEME, theme).commit()
+
 }

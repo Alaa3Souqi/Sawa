@@ -21,7 +21,10 @@ import com.aspire.sawa.R
 import com.aspire.sawa.SawaApplication
 import com.aspire.sawa.adapters.CategoryAdapter
 import com.aspire.sawa.adapters.PlaceAdapter
-import com.aspire.sawa.databinding.*
+import com.aspire.sawa.databinding.FragmentHomeBinding
+import com.aspire.sawa.databinding.LayoutCheckedInBinding
+import com.aspire.sawa.databinding.LayoutDialogCheckOutBinding
+import com.aspire.sawa.databinding.LayoutDialogRateBinding
 import com.aspire.sawa.dependencyInjection.AppComponent
 import com.aspire.sawa.models.Place
 import com.aspire.sawa.ui.MainActivity
@@ -37,17 +40,13 @@ import com.aspire.sawa.viewModels.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import javax.inject.Inject
 
-
 class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChangeListener {
 
     //suggestion
-    private var _fragmentHomeBinding: FragmentHomeBinding? = null
-    private val fragmentHomeBinding get() = _fragmentHomeBinding!!
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
     //end of suggestion block
-    private lateinit var binding: FragmentHomeBinding
-    private lateinit var bottomSheetBinding: HomeBottomSheetBinding
-    private lateinit var drawerBinding: HomeNavigationDrawerBinding
-    private lateinit var checkedInBinding: LayoutCheckedInBinding
+
     private lateinit var mainActivity: MainActivity
     private lateinit var appComponent: AppComponent
     private lateinit var navController: NavController
@@ -68,14 +67,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentHomeBinding.inflate(layoutInflater)
-        bottomSheetBinding = binding.include
-        drawerBinding = binding.navDrawer
-        checkedInBinding = binding.includeCheckedIn
+        _binding = FragmentHomeBinding.inflate(layoutInflater)
         navController = findNavController()
 
         return binding.root
-        //TODO: please nullify binding in onDestroy() so as to prevent accidental access of views after the fragment's view's been destroyed thus leading to memory leaks
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -89,6 +84,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
         viewModel.checkedInPlace.observe(viewLifecycleOwner) { checkInPlace ->
             val place = placeList.first { it.id == checkInPlace.id }
             setupCheckedIn(place, checkInPlace.checkInTime)
+
         }
 
         val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
@@ -112,9 +108,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
 
     private fun setupCheckedIn(place: Place, checkInTime: String) {
         binding.btnGroup.isVisible = false
-        binding.includeCheckedIn.root.isVisible = true
+        binding.checkInLayout.root.isVisible = true
 
-        checkedInBinding.run {
+        binding.checkInLayout.run {
 
             tvCheckedInName.text = place.name
             tvBranchName.text = place.branch
@@ -133,7 +129,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
 
             cvCheckOut.setOnClickListener {
                 createCheckOutDialog(place, duration)
-
             }
         }
     }
@@ -160,7 +155,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
                 viewModel.checkOut()
 
                 binding.btnGroup.isVisible = true
-                binding.includeCheckedIn.root.isVisible = false
+                binding.checkInLayout.root.isVisible = false
                 builder.dismiss()
             }
 
@@ -173,6 +168,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
             show()
 
         }
+
     }
 
     private fun fillCheckInCapacityState(place: Place, checkInBinding: LayoutCheckedInBinding) {
@@ -244,7 +240,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
     }
 
     private fun setupNavigationDrawer() {
-        drawerBinding.run {
+        binding.navDrawer.run {
 
             if (mainActivity.viewModel.getLanguage() == ARABIC) {
                 rgLanguage.check(R.id.rb_arabic)
@@ -272,7 +268,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
     }
 
     private fun setupOnBackPress() {
-        val behavior = from(bottomSheetBinding.root)
+        val behavior = from(binding.bottomSheet.root)
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
 
@@ -294,7 +290,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
 
     private fun setupBottomSheet() {
 
-        bottomSheetBinding.run {
+        binding.bottomSheet.run {
 
             val behavior = from(root)
 
@@ -312,18 +308,18 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
     }
 
     private fun categoryRvSetup() {
-        bottomSheetBinding.rvCategory.adapter = CategoryAdapter(categoryList)
+        binding.bottomSheet.rvCategory.adapter = CategoryAdapter(categoryList)
     }
 
     private fun placeRvSetup() {
         val placeAdapter = PlaceAdapter()
 
         placeAdapter.differ.submitList(placeList)
-        bottomSheetBinding.rvNearbyPlaces.adapter = placeAdapter
+        binding.bottomSheet.rvNearbyPlaces.adapter = placeAdapter
     }
 
     override fun onCheckedChanged(radioGroup: RadioGroup, radioButton: Int) {
-        drawerBinding.run {
+        binding.navDrawer.run {
             when (radioButton) {
 
                 rbArabic.id -> {
@@ -346,6 +342,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
     private fun recreate() {
         mainActivity.recreate()
         binding.drawerLayout.closeDrawer(END)
-        bottomSheetBinding.etSearch.clearFocus()
+        binding.bottomSheet.etSearch.clearFocus()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
