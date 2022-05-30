@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.aspire.sawa.models.CheckedInPlace
 import com.aspire.sawa.repositoires.CheckInRepositories
 import com.aspire.sawa.repositoires.TimeRepositories
+import com.aspire.sawa.unitls.ScreenState
 import com.aspire.sawa.unitls.SingleLiveEvent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -24,11 +25,16 @@ class HomeViewModel @Inject constructor(
     val checkedInPlace: LiveData<CheckedInPlace>
         get() = _checkedInPlace
 
+    private val _checkInValidate = SingleLiveEvent<ScreenState>()
+    val checkInValidate: LiveData<ScreenState>
+        get() = _checkInValidate
+
     private var isComplete = false
 
     fun getCheckedInPlace() {
         checkInRepo.getId()?.let { id ->
             _checkedInPlace.postValue(CheckedInPlace(id, timeRepo.getCurrentTime()))
+            isComplete = false
         }
     }
 
@@ -51,8 +57,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun checkIn(id: String) {
-        checkInRepo.checkIn(id, timeRepo.getCurrentTime())
-        isComplete = false
+        _checkInValidate.postValue(checkInRepo.checkIn(id, timeRepo.getCurrentTime()))
     }
 
     fun checkOut() {

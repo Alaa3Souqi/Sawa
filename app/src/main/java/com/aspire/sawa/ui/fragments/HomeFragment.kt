@@ -36,6 +36,7 @@ import com.aspire.sawa.unitls.Constraints.ENGLISH
 import com.aspire.sawa.unitls.Constraints.PINK
 import com.aspire.sawa.unitls.Constraints.categoryList
 import com.aspire.sawa.unitls.Constraints.placeList
+import com.aspire.sawa.unitls.Status
 import com.aspire.sawa.viewModels.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import javax.inject.Inject
@@ -82,16 +83,28 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
         viewModel.getCheckedInPlace()
 
         viewModel.checkedInPlace.observe(viewLifecycleOwner) { checkInPlace ->
-            val place = placeList.first { it.id == checkInPlace.id }
-            setupCheckedIn(place, checkInPlace.checkInTime)
 
+            placeList.firstOrNull { it.id == checkInPlace.id }?.let { place ->
+                setupCheckedIn(place, checkInPlace.checkInTime)
+            }
+
+        }
+
+        viewModel.checkInValidate.observe(viewLifecycleOwner) { state ->
+            when (state.status) {
+
+                Status.SUCCESS ->
+                    viewModel.getCheckedInPlace()
+
+                Status.ERROR ->
+                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+            }
         }
 
         val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
         savedStateHandle?.getLiveData<String>(CHECK_IN_ID)?.observe(viewLifecycleOwner) { id ->
             if (id != null) {
                 viewModel.checkIn(id)
-                viewModel.getCheckedInPlace()
                 savedStateHandle.getLiveData<String>(CHECK_IN_ID).value = null
             }
         }
