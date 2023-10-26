@@ -9,6 +9,8 @@ class SettingViewModel @Inject constructor(
     private val settingsRepositories: SettingsRepositories
 ) : ViewModel() {
 
+
+
     fun updateTheme(theme: String) {
         settingsRepositories.updateTheme(theme)
     }
