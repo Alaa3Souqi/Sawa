@@ -52,6 +52,8 @@
     <string name="later">Maybe later</string>
     <string name="save">Save</string>
     <string name="access_camera">Application can\'t access the camera</string>
+    <string name="email_address_is_required" translatable="false">email address is required</string>
+    <string name="enter_valid_email_address" translatable="false">enter valid email</string>
 
 
 </resources>

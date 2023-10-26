@@ -7,8 +7,7 @@ import javax.inject.Inject
 
 class SettingViewModel @Inject constructor(
     private val settingsRepositories: SettingsRepositories
-) :
-    ViewModel() {
+) : ViewModel() {
 
     fun updateTheme(theme: String) {
         settingsRepositories.updateTheme(theme)

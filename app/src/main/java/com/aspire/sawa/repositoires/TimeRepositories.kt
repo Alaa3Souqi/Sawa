@@ -21,13 +21,18 @@ class TimeRepositories @Inject constructor() {
         String.format("%02d:%02d:%02d", hour, min, sec)
 
     fun differenceBetweenTwoTimes(time1: String, time2: String): Long {
+
         val format = SimpleDateFormat("HH:mm:ss", Locale.ENGLISH)
 
         format.parse(time1)?.time?.let { currentTime ->
+
             format.parse(time2)?.time?.let { checkInTime ->
+
                 return (currentTime - checkInTime) / 1000
+
             }
         }
+
         return -1
     }
 

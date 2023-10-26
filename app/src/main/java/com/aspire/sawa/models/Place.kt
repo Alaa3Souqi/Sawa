@@ -1,5 +1,7 @@
 package com.aspire.sawa.models
 
+import java.util.*
+
 data class Place(
     val id: String,
     val name: String,

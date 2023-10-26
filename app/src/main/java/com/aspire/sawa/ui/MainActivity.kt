@@ -3,6 +3,7 @@ package com.aspire.sawa.ui
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.aspire.sawa.R
 import com.aspire.sawa.SawaApplication
@@ -30,21 +31,19 @@ class MainActivity : AppCompatActivity() {
         } else {
             setTheme(R.style.Theme_Sawa_Pink)
         }
+        setLocale(viewModel.getLanguage())
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        setLocale(viewModel.getLanguage())
     }
 
-    fun restartActivity() {
-        val intent = intent
-        finish()
-        startActivity(intent)
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAfterTransition()
     }
 
     private fun setLocale(languageCode: String) {
-        val locale = Locale(languageCode)
+        val locale = Locale(languageCode,"TN")
         Locale.setDefault(locale)
         val resources: Resources = this.resources
         val config: Configuration = resources.configuration

@@ -1,5 +1,6 @@
 package com.aspire.sawa.viewModels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +9,9 @@ import com.aspire.sawa.repositoires.CheckInRepositories
 import com.aspire.sawa.repositoires.TimeRepositories
 import com.aspire.sawa.unitls.ScreenState
 import com.aspire.sawa.unitls.SingleLiveEvent
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,9 +41,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private var job: Job? = null
+
     fun refreshTimer() {
-        viewModelScope.launch {
-            while (!isComplete) {
+        job = viewModelScope.launch {
+            while (!isComplete && isActive) {
 
                 val seconds = timeRepo.differenceBetweenTwoTimes(
                     timeRepo.getCurrentTime(),
@@ -51,7 +56,12 @@ class HomeViewModel @Inject constructor(
 
                 _timer.postValue(timeStringFromDouble)
 
+                Log.d("TAG", "refreshTimer: $timeStringFromDouble")
+
                 delay(1000)
+
+                checkedInPlace.value
+
             }
         }
     }
@@ -63,6 +73,12 @@ class HomeViewModel @Inject constructor(
     fun checkOut() {
         isComplete = true
         checkInRepo.checkOut()
+        cancelJob()
     }
+
+    fun cancelJob() {
+        job?.cancel()
+    }
+
 
 }

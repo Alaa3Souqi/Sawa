@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import com.aspire.sawa.R
 import com.aspire.sawa.databinding.FragmentQrCodeBinding
@@ -52,7 +54,8 @@ class QrCodeFragment : Fragment(R.layout.fragment_qr_code) {
         codeScanner.decodeCallback = DecodeCallback {
             requireActivity().runOnUiThread {
                 val navController = findNavController()
-                navController.previousBackStackEntry?.savedStateHandle?.set(CHECK_IN_ID, it.text)
+                setFragmentResult(CHECK_IN_ID, bundleOf(CHECK_IN_ID to it.text))
+//              navController.previousBackStackEntry?.savedStateHandle?.set(CHECK_IN_ID, it.text)
                 navController.popBackStack()
             }
         }

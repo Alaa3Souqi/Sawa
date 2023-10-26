@@ -15,12 +15,13 @@ import androidx.core.content.res.ResourcesCompat.getFont
 import androidx.core.view.GravityCompat.END
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.aspire.sawa.R
 import com.aspire.sawa.SawaApplication
-import com.aspire.sawa.adapters.CategoryAdapter
-import com.aspire.sawa.adapters.PlaceAdapter
+import com.aspire.sawa.adapters.CategoryItem
+import com.aspire.sawa.adapters.PlaceItem
 import com.aspire.sawa.databinding.FragmentHomeBinding
 import com.aspire.sawa.databinding.LayoutCheckedInBinding
 import com.aspire.sawa.databinding.LayoutDialogCheckOutBinding
@@ -39,6 +40,7 @@ import com.aspire.sawa.unitls.Constraints.placeList
 import com.aspire.sawa.unitls.Status
 import com.aspire.sawa.viewModels.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
+import com.xwray.groupie.GroupieAdapter
 import javax.inject.Inject
 
 class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChangeListener {
@@ -74,21 +76,30 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         setupBottomSheet()
         setupOnBackPress()
         setupNavigationDrawer()
         viewModel.getCheckedInPlace()
 
-        viewModel.checkedInPlace.observe(viewLifecycleOwner) { checkInPlace ->
-
-            placeList.firstOrNull { it.id == checkInPlace.id }?.let { place ->
-                setupCheckedIn(place, checkInPlace.checkInTime)
+        setFragmentResultListener(CHECK_IN_ID) { _, bundle ->
+            bundle.getString(CHECK_IN_ID)?.let {
+                viewModel.checkIn(it)
             }
-
         }
+
+//        val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+//
+//        savedStateHandle?.getLiveData<String>(CHECK_IN_ID)?.observe(viewLifecycleOwner) { id ->
+//            if (id != null) {
+//                viewModel.checkIn(id)
+//                savedStateHandle.getLiveData<String>(CHECK_IN_ID).value = null
+//            }
+//        }
 
         viewModel.checkInValidate.observe(viewLifecycleOwner) { state ->
             when (state.status) {
@@ -101,12 +112,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
             }
         }
 
-        val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
-        savedStateHandle?.getLiveData<String>(CHECK_IN_ID)?.observe(viewLifecycleOwner) { id ->
-            if (id != null) {
-                viewModel.checkIn(id)
-                savedStateHandle.getLiveData<String>(CHECK_IN_ID).value = null
+        viewModel.checkedInPlace.observe(viewLifecycleOwner) { checkInPlace ->
+
+            placeList.firstOrNull { it.id == checkInPlace.id }?.let { place ->
+                setupCheckedIn(place, checkInPlace.checkInTime)
             }
+
         }
 
         binding.btnCheckIn.setOnClickListener {
@@ -171,7 +182,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
                 binding.checkInLayout.root.isVisible = false
                 builder.dismiss()
             }
-
         }
 
         builder.run {
@@ -181,7 +191,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
             show()
 
         }
-
     }
 
     private fun fillCheckInCapacityState(place: Place, checkInBinding: LayoutCheckedInBinding) {
@@ -256,25 +265,25 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
         binding.navDrawer.run {
 
             if (mainActivity.viewModel.getLanguage() == ARABIC) {
-                rgLanguage.check(R.id.rb_arabic)
-                rbArabic.typeface = getFont(requireContext(), R.font.tajawal_bold)
+                rgLanguage?.check(R.id.rb_arabic)
+                rbArabic?.typeface = getFont(requireContext(), R.font.tajawal_bold)
             } else {
-                rgLanguage.check(R.id.rb_english)
-                rbEnglish.typeface = getFont(requireContext(), R.font.poppins_semi_bold)
+                rgLanguage?.check(R.id.rb_english)
+                rbEnglish?.typeface = getFont(requireContext(), R.font.poppins_semi_bold)
             }
 
             if (mainActivity.viewModel.getTheme() == PINK) {
-                rgTheme.check(R.id.rb_pink)
-                rbPink.typeface = getFont(requireContext(), R.font.poppins_semi_bold)
+                rgTheme?.check(R.id.rb_pink)
+                rbPink?.typeface = getFont(requireContext(), R.font.poppins_semi_bold)
 
             } else {
-                rgTheme.check(R.id.rb_blue)
-                rbBlue.typeface = getFont(requireContext(), R.font.poppins_semi_bold)
+                rgTheme?.check(R.id.rb_blue)
+                rbBlue?.typeface = getFont(requireContext(), R.font.poppins_semi_bold)
             }
 
-            ivBack.setOnClickListener { binding.drawerLayout.closeDrawer(END) }
-            rgLanguage.setOnCheckedChangeListener(this@HomeFragment)
-            rgTheme.setOnCheckedChangeListener(this@HomeFragment)
+            ivBack?.setOnClickListener { binding.drawerLayout.closeDrawer(END) }
+            rgLanguage?.setOnCheckedChangeListener(this@HomeFragment)
+            rgTheme?.setOnCheckedChangeListener(this@HomeFragment)
 
         }
 
@@ -321,13 +330,15 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
     }
 
     private fun categoryRvSetup() {
-        binding.bottomSheet.rvCategory.adapter = CategoryAdapter(categoryList)
+        val adapter = GroupieAdapter()
+        adapter.addAll(categoryList.map { category -> CategoryItem(category) })
+        binding.bottomSheet.rvCategory.adapter = adapter
     }
 
     private fun placeRvSetup() {
-        val placeAdapter = PlaceAdapter()
+        val placeAdapter = GroupieAdapter()
 
-        placeAdapter.differ.submitList(placeList)
+        placeAdapter.addAll(placeList.map { PlaceItem(it) })
         binding.bottomSheet.rvNearbyPlaces.adapter = placeAdapter
     }
 
@@ -335,16 +346,16 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
         binding.navDrawer.run {
             when (radioButton) {
 
-                rbArabic.id -> {
+                rbArabic?.id -> {
                     mainActivity.viewModel.updateLanguage(ARABIC)
                 }
-                rbEnglish.id -> {
+                rbEnglish?.id -> {
                     mainActivity.viewModel.updateLanguage(ENGLISH)
                 }
-                rbPink.id -> {
+                rbPink?.id -> {
                     mainActivity.viewModel.updateTheme(PINK)
                 }
-                rbBlue.id -> {
+                rbBlue?.id -> {
                     mainActivity.viewModel.updateTheme(BLUE)
                 }
             }
@@ -356,6 +367,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), RadioGroup.OnCheckedChang
         mainActivity.recreate()
         binding.drawerLayout.closeDrawer(END)
         binding.bottomSheet.etSearch.clearFocus()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.cancelJob()
     }
 
     override fun onDestroyView() {

@@ -1,5 +1,6 @@
 package com.aspire.sawa.viewModels
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.aspire.sawa.repositoires.SettingsRepositories
 import com.aspire.sawa.unitls.Constraints.ARABIC
 import com.aspire.sawa.unitls.Constraints.BLUE
@@ -9,12 +10,16 @@ import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 class SettingViewModelTest {
 
     private lateinit var repo: SettingsRepositories
     private lateinit var settingViewModel: SettingViewModel
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before
     fun setup() {

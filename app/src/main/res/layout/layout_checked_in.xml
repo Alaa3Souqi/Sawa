@@ -14,9 +14,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:fontFamily="@font/poppins_semi_bold"
         android:text="@string/you_have_checked_in"
         android:textSize="14sp"
-        android:fontFamily="@font/poppins_semi_bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,6 +34,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:paddingStart="18dp"
             android:paddingEnd="0dp">
 
@@ -79,7 +80,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/textView10"
@@ -106,8 +108,8 @@
 
             <TextView
                 android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="65dp"
+                android:layout_height="23dp"
                 android:text="@string/Capacity"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView10"
@@ -144,7 +146,8 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:background="@color/white">
 
                     <ImageView
                         android:layout_width="18dp"
@@ -182,7 +185,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/tv_duration"
@@ -225,13 +229,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/imageView5"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="22dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
                 android:contentDescription="@string/logo"
                 android:src="@drawable/ic_icon_offers"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -268,16 +273,17 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/imageView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
                 android:contentDescription="@string/logo"
                 android:src="@drawable/ic_icon_awesome_qrcode"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="22dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -303,8 +309,8 @@
         android:layout_width="100dp"
         android:layout_height="117dp"
         android:layout_marginStart="1dp"
-        android:layout_marginBottom="2dp"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="2dp"
         app:cardCornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cv_check_another_place"
@@ -314,13 +320,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/imageView7"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="22dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
                 android:contentDescription="@string/logo"
                 android:src="@drawable/ic_icon_feather_log_out"
                 app:layout_constraintEnd_toEndOf="parent"
